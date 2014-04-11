@@ -1,0 +1,46 @@
+module.exports = {
+
+	connect: function(){
+		this.sendMessage('connect');
+		this.sendMessage('getPath', '%id');
+	},
+
+	setHeight: function(px){
+		this.sendMessage('setHeight', { pixels: px });
+	},
+
+	setAttribute: function(name, value){
+		var attr = {};
+		attr[name] = value;
+		this.setAttributes(attr);
+	},
+
+	setAttributes: function(attrs) {
+		this.sendMessage('setAttributes', attrs);
+	},
+
+	setPropertySheetAttributes: function(attrs){
+		this.sendMessage('setPropertySheetAttributes', attrs);
+	},
+
+	setEmpty: function(empty){
+		this.sendMessage('setEmpty', { empty: empty });
+	},
+
+	track: function(data){
+		this.sendMessage('track', data);
+	},
+
+	error: function(data){
+		this.sendMessage('error', data);
+	},
+
+	// controversial
+	changeBlocking: function(){
+		this.sendMessage('changeBlocking');
+	},
+
+	requestAsset: function(data){
+		this.sendMessage('requestAsset', data);
+	}
+};
