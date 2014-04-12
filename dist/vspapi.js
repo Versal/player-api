@@ -101,7 +101,7 @@ PlayerAPI.prototype.handleMessage = function(evt) {
 
     // Future-proofing editableChanged event
     if(message.event == 'setEditable') {
-      this.emit('editableChanged', message.data);
+      this.emit('editableChanged', message.data.editable);
     }
 
     // Store asset URL template for further usage

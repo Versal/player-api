@@ -95,8 +95,8 @@ describe 'supported commands', ->
     it 'setEditable should trigger editableChanged', ->
       editableChanged = sinon.spy()
       papi.on('editableChanged', editableChanged)
-      papi.handleMessage data: { event: 'setEditable', data: true }
-      assert editableChanged.called
+      papi.handleMessage data: { event: 'setEditable', data: { editable: true } }
+      assert editableChanged.calledWith true
 
     it 'setPath should update assetUrlTemplate', ->
       papi.handleMessage data: { event: 'setPath', data: { url: 'foo/bar' } }
