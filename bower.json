@@ -1,0 +1,23 @@
+{
+  "name": "versal-player-api",
+  "main": "dist/vspapi.min.js",
+  "version": "0.0.1",
+  "homepage": "https://github.com/Versal/player-api",
+  "authors": [
+    "Andrey Mereskin <am@versal.com>"
+  ],
+  "description": "Versal player API",
+  "keywords": [
+    "Versal",
+    "player",
+    "api"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "test",
+    "index.js",
+    "api"
+  ]
+}

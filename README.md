@@ -22,3 +22,8 @@ right on your instance of player API:
 		playerAPI.setHeight(300);
 
 For a full list of supported events and commands
+
+## Contributing
+
+To contribute, clone this repo and npm install. Write some tests, run them with
+`npm test`, then make them pass.
