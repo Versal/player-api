@@ -34,6 +34,24 @@ describe 'supported commands', ->
     expectedMessage = { event: 'setAttributes', data: { foo: 'bar'} }
     assert postMessage.calledWith expectedMessage, '*'
 
+  it 'setLearnerAttribute', ->
+    papi.setLearnerAttribute 'foo', 'bar'
+
+    expectedMessage = { event: 'setLearnerState', data: { foo: 'bar'} }
+    assert postMessage.calledWith expectedMessage, '*'
+
+  it 'setLearnerAttributes', ->
+    papi.setLearnerAttributes { foo: 'bar'}
+
+    expectedMessage = { event: 'setLearnerState', data: { foo: 'bar'} }
+    assert postMessage.calledWith expectedMessage, '*'
+
+  it 'setLearnerState', ->
+    papi.setLearnerState { foo: 'bar'}
+
+    expectedMessage = { event: 'setLearnerState', data: { foo: 'bar'} }
+    assert postMessage.calledWith expectedMessage, '*'
+
   it 'setPropertySheetAttributes', ->
     papi.setPropertySheetAttributes { foo: 'bar' }
 

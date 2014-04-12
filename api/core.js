@@ -19,6 +19,20 @@ module.exports = {
 		this.sendMessage('setAttributes', attrs);
 	},
 
+	setLearnerAttribute: function(name, value){
+		var attr = {};
+		attr[name] = value;
+		this.setLearnerState(attr);
+	},
+
+	setLearnerAttributes: function(attrs) {
+		this.sendMessage('setLearnerState', attrs);
+	},
+
+	setLearnerState: function(attrs) {
+		this.sendMessage('setLearnerState', attrs);
+	},
+
 	setPropertySheetAttributes: function(attrs){
 		this.sendMessage('setPropertySheetAttributes', attrs);
 	},
