@@ -10,6 +10,10 @@ var PlayerAPI = function(options){
   EventEmitter.call(this);
 
   this.eventSource = (options && options.eventSource) || window.parent;
+
+  // TODO: implement connect event and read value from env variables
+  this.assetUrlTemplate = options.assetUrlTemplate;
+
   if(typeof window != 'undefined'){
     window.addEventListener('message', this.handleMessage.bind(this));
   }
@@ -49,7 +53,7 @@ PlayerAPI.prototype.handleMessage = function(evt) {
 };
 
 PlayerAPI.prototype.assetUrl = function(id){
-  return this.assetUrlTemplate.replace('{id}', id);
+  return this.assetUrlTemplate + id;
 };
 
 PlayerAPI.use = function(dictionary){
