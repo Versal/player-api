@@ -85,9 +85,12 @@ describe 'supported commands', ->
     assert postMessage.calledWith expectedMessage, '*'
 
   it 'requestAsset', ->
-    papi.requestAsset { foo: 'bar'}
+    papi.requestAsset { type: 'image' }
 
-    expectedMessage = { event: 'requestAsset', data: { foo: 'bar'} }
+    expectedMessage = {
+      event: 'requestAsset',
+      data: { type: 'image', attribute: '__asset__'}
+    }
     assert postMessage.calledWith expectedMessage, '*'
 
   describe 'compatibility', ->
@@ -101,3 +104,12 @@ describe 'supported commands', ->
     it 'setPath should update assetUrlTemplate', ->
       papi.handleMessage data: { event: 'setPath', data: { url: 'foo/bar' } }
       assert.equal papi.assetUrlTemplate, 'foo/bar'
+
+  describe 'futures', ->
+
+    it 'requestAsset triggers an optional callback', ->
+      papi.requestAsset { type: 'image', attribute: 'foo' }
+      assetSelected = sinon.spy()
+      papi.on 'assetSelected', assetSelected
+      papi.handleMessage data: { event: 'attributesChanged', data: { foo: { id: 1 } } }
+      assert assetSelected.calledWith { name: 'foo', asset: { id: 1 }}

@@ -55,6 +55,12 @@ module.exports = {
 	},
 
 	requestAsset: function(data){
+		if(!data.attribute) {
+			data.attribute = '__asset__';
+		}
+		// TODO: remove this after assets are communicated from the player
+		// in a dedicated event
+		this._assetAttributes[data.attribute] = true;
 		this.sendMessage('requestAsset', data);
 	}
 };
