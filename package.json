@@ -1,12 +1,12 @@
 {
   "name": "versal-player-api",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Player interface for versal gadgets",
   "main": "index.js",
   "scripts": {
     "test": "mocha test/*.coffee --compilers coffee:coffee-script/register",
     "prepublish": "npm run build",
-    "build": "browserify -s VersalPlayerAPI index.js > dist/vspapi.js && uglifyjs dist/vspapi.js > dist/vspapi.min.js"
+    "build": "browserify -s VersalPlayerAPI index.js > dist/index.js"
   },
   "keywords": [
     "versal",

@@ -1,6 +1,6 @@
 {
   "name": "versal-player-api",
-  "main": "dist/vspapi.min.js",
+  "main": "dist/index.js",
   "version": "0.0.7",
   "homepage": "https://github.com/Versal/player-api",
   "authors": [
