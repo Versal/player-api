@@ -93,8 +93,16 @@ var PlayerAPI = function(options){
 
   // TODO: don't communicate assets in setAttributes event in the player
   this._assetAttributes = {};
+  this._assetCallbacks = {};
 
   if(typeof window != 'undefined'){
+    if(options && options.debug){
+      window.addEventListener('message', function(evt){
+        if(evt.data && evt.data.event) {
+          console.log('Gadget received message from SDK:', evt.data.event, evt.data.data);
+        }
+      });
+    }
     window.addEventListener('message', this.handleMessage.bind(this));
   }
 };
@@ -138,7 +146,7 @@ PlayerAPI.prototype.handleMessage = function(evt) {
 };
 
 PlayerAPI.prototype.assetUrl = function(id){
-  return this.assetUrlTemplate + id;
+  return this.assetUrlTemplate.replace('<%= id %>', id);
 };
 
 // TODO: move implementation to the player
@@ -148,6 +156,10 @@ PlayerAPI.prototype._triggerAssetCallbacks = function(attrs){
       var asset = attrs[name];
       this.emit('assetSelected', { name: name, asset: asset });
       attrs[name] = null;
+
+      if(this._assetCallbacks[name]) {
+        this._assetCallbacks[name].call(this, asset);
+      }
     }
   }.bind(this));
 };

@@ -102,9 +102,15 @@ describe 'supported commands', ->
 
   describe 'futures', ->
 
-    it 'requestAsset triggers an optional callback', ->
+    it 'requestAsset emits assetSelected', ->
       papi.requestAsset { type: 'image', attribute: 'foo' }
       assetSelected = sinon.spy()
       papi.on 'assetSelected', assetSelected
       papi.handleMessage data: { event: 'attributesChanged', data: { foo: { id: 1 } } }
       assert assetSelected.calledWith { name: 'foo', asset: { id: 1 }}
+
+    it 'requestAsset triggers a callback', ->
+      assetSelected = sinon.spy()
+      papi.requestAsset { type: 'image', attribute: 'foo' }, assetSelected
+      papi.handleMessage data: { event: 'attributesChanged', data: { foo: { id: 1 } } }
+      assert assetSelected.calledWith { id: 1 }
