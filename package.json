@@ -1,6 +1,6 @@
 {
   "name": "versal-player-api",
-  "version": "0.0.8",
+  "version": "0.0.10",
   "description": "Player interface for versal gadgets",
   "main": "index.js",
   "scripts": {
