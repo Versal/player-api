@@ -40,8 +40,12 @@ module.exports = {
 		this.sendMessage('setEmpty', { empty: empty });
 	},
 
-	track: function(data){
-		this.sendMessage('track', data);
+	track: function(name, data){
+		var message = {
+			event: name,
+			data: data
+		};
+		this.sendMessage('track', message);
 	},
 
 	error: function(data){
