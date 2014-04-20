@@ -12,7 +12,7 @@ var PlayerAPI = function(options){
   this.eventSource = (options && options.eventSource) || window.parent;
 
   // TODO: implement connect event and read value from env variables
-  this.assetUrlTemplate = options.assetUrlTemplate ||
+  this.assetUrlTemplate = (options && options.assetUrlTemplate) ||
                           'https://static.versal.com/restapi/assets/';
 
   // TODO: don't communicate assets in setAttributes event in the player
@@ -55,9 +55,8 @@ PlayerAPI.prototype.handleMessage = function(evt) {
       this.emit('editableChanged', message.data.editable);
     }
 
-    // Store asset URL template for further usage
-    if(message.event == 'setPath') {
-      this.assetUrlTemplate = message.data.url;
+    if(message.event == 'environmentChanged') {
+      this.assetUrlTemplate = message.data.assetUrlTemplate;
     }
   }
 };

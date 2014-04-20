@@ -1,8 +1,7 @@
 module.exports = {
 
-	connect: function(){
-		this.sendMessage('connect');
-		this.sendMessage('getPath', '%id');
+	start: function(){
+		this.sendMessage('start');
 	},
 
 	setHeight: function(px){

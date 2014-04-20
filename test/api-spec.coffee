@@ -10,11 +10,10 @@ describe 'supported commands', ->
     postMessage = sinon.spy()
     papi = new PlayerAPI(eventSource: { postMessage })
 
-  it 'connect', ->
-    papi.connect()
+  it 'start', ->
+    papi.start()
 
-    assert.deepEqual postMessage.firstCall.args, [{ event: 'connect' }, '*']
-    assert.deepEqual postMessage.secondCall.args, [{ event: 'getPath', data: '%id' }, '*']
+    assert.deepEqual postMessage.firstCall.args, [{ event: 'start' }, '*']
 
   it 'setHeight', ->
     papi.setHeight(73)
@@ -100,10 +99,6 @@ describe 'supported commands', ->
       papi.on('editableChanged', editableChanged)
       papi.handleMessage data: { event: 'setEditable', data: { editable: true } }
       assert editableChanged.calledWith true
-
-    it 'setPath should update assetUrlTemplate', ->
-      papi.handleMessage data: { event: 'setPath', data: { url: 'foo/bar' } }
-      assert.equal papi.assetUrlTemplate, 'foo/bar'
 
   describe 'futures', ->
 
