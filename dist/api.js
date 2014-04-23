@@ -70,7 +70,20 @@ module.exports = {
 			this._assetCallbacks[data.attribute] = callback;
 		}
 		this.sendMessage('requestAsset', data);
-	}
+	},
+
+  // challenges
+  setChallenges: function(challenges) {
+    this.sendMessage('setChallenges', {
+      challenges: challenges
+    });
+  },
+
+  scoreChallenges: function(responses) {
+    this.sendMessage('scoreChallenges', {
+      responses: responses
+    });
+  }
 };
 
 },{}],2:[function(_dereq_,module,exports){
