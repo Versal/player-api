@@ -1,7 +1,7 @@
 module.exports = {
 
-	start: function(){
-		this.sendMessage('start');
+	startListening: function(){
+		this.sendMessage('startListening');
 	},
 
 	setHeight: function(px){

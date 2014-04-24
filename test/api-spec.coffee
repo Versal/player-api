@@ -10,10 +10,10 @@ describe 'supported commands', ->
     postMessage = sinon.spy()
     papi = new PlayerAPI(eventSource: { postMessage })
 
-  it 'start', ->
-    papi.start()
+  it 'startListening', ->
+    papi.startListening()
 
-    assert.deepEqual postMessage.firstCall.args, [{ event: 'start' }, '*']
+    assert.deepEqual postMessage.firstCall.args, [{ event: 'startListening' }, '*']
 
   it 'setHeight', ->
     papi.setHeight(73)
