@@ -103,12 +103,11 @@ describe 'supported commands', ->
 
     expectedMessage =
       event: 'setChallenges'
-      data:
-        challenges: [{
-          prompt: 'Hello'
-          answer: 'Answer'
-          scoring: 'strict'
-        }]
+      data: [{
+        prompt: 'Hello'
+        answer: 'Answer'
+        scoring: 'strict'
+      }]
     assert postMessage.calledWith expectedMessage, '*'
 
   it 'scoreChallenges', ->
@@ -120,12 +119,11 @@ describe 'supported commands', ->
 
     expectedMessage =
       event: 'scoreChallenges'
-      data:
-        responses: [
-          'one'
-          'two'
-          'three'
-        ]
+      data: [
+        'one'
+        'two'
+        'three'
+      ]
     assert postMessage.calledWith
 
   describe 'compatibility', ->
