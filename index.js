@@ -13,7 +13,7 @@ var PlayerAPI = function(options){
 
   // TODO: implement connect event and read value from env variables
   this.assetUrlTemplate = (options && options.assetUrlTemplate) ||
-                          'https://static.versal.com/restapi/assets/';
+                          'https://static.versal.com/restapi/assets/<%= id %>';
 
   // TODO: don't communicate assets in setAttributes event in the player
   this._assetAttributes = {};
