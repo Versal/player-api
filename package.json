@@ -1,20 +1,8 @@
 {
-  "name": "versal-player-api",
-  "version": "0.0.12",
-  "description": "Player interface for versal gadgets",
-  "main": "index.js",
   "scripts": {
     "test": "mocha test/*.coffee --compilers coffee:coffee-script/register",
-    "prepublish": "npm run build",
     "build": "browserify -s VersalPlayerAPI index.js > dist/api.js"
   },
-  "keywords": [
-    "versal",
-    "player",
-    "api"
-  ],
-  "author": "Andrey Mereskin <am@versal.com>",
-  "license": "MIT",
   "devDependencies": {
     "browserify": "^3.41.0",
     "coffee-script": "^1.7.1",
