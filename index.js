@@ -1,5 +1,6 @@
 var EventEmitter = require('events').EventEmitter;
 var coreApi = require('./api/core');
+var challenges = require('./api/challenges');
 
 //  This Player thing should be used inside gadget
 //  as a convenience API over postMessage.
@@ -91,5 +92,6 @@ PlayerAPI.use = function(dictionary){
 };
 
 PlayerAPI.use(coreApi);
+PlayerAPI.use(challenges);
 
 module.exports = PlayerAPI;

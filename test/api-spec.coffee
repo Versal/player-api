@@ -92,40 +92,6 @@ describe 'supported commands', ->
     }
     assert postMessage.calledWith expectedMessage, '*'
 
-  it 'setChallenges', ->
-    papi.setChallenges [
-      {
-        prompt: 'Hello'
-        answer: 'Answer'
-        scoring: 'strict'
-      }
-    ]
-
-    expectedMessage =
-      event: 'setChallenges'
-      data: [{
-        prompt: 'Hello'
-        answer: 'Answer'
-        scoring: 'strict'
-      }]
-    assert postMessage.calledWith expectedMessage, '*'
-
-  it 'scoreChallenges', ->
-    papi.scoreChallenges [
-      'one'
-      'two'
-      'three'
-    ]
-
-    expectedMessage =
-      event: 'scoreChallenges'
-      data: [
-        'one'
-        'two'
-        'three'
-      ]
-    assert postMessage.calledWith
-
   describe 'compatibility', ->
 
     it 'setEditable should trigger editableChanged', ->

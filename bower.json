@@ -1,10 +1,10 @@
 {
   "name": "versal-player-api",
-  "main": "dist/index.js",
-  "version": "0.0.12",
+  "main": "dist/api.js",
+  "version": "0.1.0",
   "homepage": "https://github.com/Versal/player-api",
   "authors": [
-    "Andrey Mereskin <am@versal.com>"
+    "Versal Team <support@versal.com>"
   ],
   "description": "Versal player API",
   "keywords": [
