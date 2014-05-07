@@ -1,5 +1,17 @@
 !function(e){if("object"==typeof exports)module.exports=e();else if("function"==typeof define&&define.amd)define(e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.VersalPlayerAPI=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
 module.exports = {
+  // challenges
+  setChallenges: function(challenges) {
+    this.sendMessage('setChallenges', challenges);
+  },
+
+  scoreChallenges: function(responses) {
+    this.sendMessage('scoreChallenges', responses);
+  }
+};
+
+},{}],2:[function(_dereq_,module,exports){
+module.exports = {
 
 	startListening: function(){
 		this.sendMessage('startListening');
@@ -70,21 +82,13 @@ module.exports = {
 			this._assetCallbacks[data.attribute] = callback;
 		}
 		this.sendMessage('requestAsset', data);
-	},
-
-  // challenges
-  setChallenges: function(challenges) {
-    this.sendMessage('setChallenges', challenges);
-  },
-
-  scoreChallenges: function(responses) {
-    this.sendMessage('scoreChallenges', responses);
-  }
+	}
 };
 
-},{}],2:[function(_dereq_,module,exports){
+},{}],3:[function(_dereq_,module,exports){
 var EventEmitter = _dereq_('events').EventEmitter;
 var coreApi = _dereq_('./api/core');
+var challenges = _dereq_('./api/challenges');
 
 //  This Player thing should be used inside gadget
 //  as a convenience API over postMessage.
@@ -95,10 +99,6 @@ var PlayerAPI = function(options){
   EventEmitter.call(this);
 
   this.eventSource = (options && options.eventSource) || window.parent;
-
-  // TODO: implement connect event and read value from env variables
-  this.assetUrlTemplate = (options && options.assetUrlTemplate) ||
-                          'https://static.versal.com/restapi/assets/';
 
   // TODO: don't communicate assets in setAttributes event in the player
   this._assetAttributes = {};
@@ -180,10 +180,11 @@ PlayerAPI.use = function(dictionary){
 };
 
 PlayerAPI.use(coreApi);
+PlayerAPI.use(challenges);
 
 module.exports = PlayerAPI;
 
-},{"./api/core":1,"events":3}],3:[function(_dereq_,module,exports){
+},{"./api/challenges":1,"./api/core":2,"events":4}],4:[function(_dereq_,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -485,6 +486,6 @@ function isUndefined(arg) {
   return arg === void 0;
 }
 
-},{}]},{},[2])
-(2)
+},{}]},{},[3])
+(3)
 });
