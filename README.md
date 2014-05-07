@@ -1,12 +1,12 @@
 # Versal Player API
 
-Versal player API provides convenience layer and stability buffer on top of
-[gadget api spec](https://github.com/Versal/gadget-api-spec). Please, refer to
-gadget api spec for the full list of supported events and commands.
+The Versal Player API provides a convenience layer and stability buffer on top
+of the [gadget api spec](https://github.com/Versal/gadget-api-spec). Please
+refer to the gadget api spec for the full list of supported events and commands.
 
 ## Installation
 
-Install it with bower `bower install versal-player-api`. Include it on the page:
+Install with bower `bower install versal-player-api` and include it on the page:
 
     <script src="bower_components/versal-player-api/dist/api.js"></script>
 
@@ -19,3 +19,4 @@ Install it with bower `bower install versal-player-api`. Include it on the page:
 
     // send this command to receive initial events
     player.startListening();
+
