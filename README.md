@@ -20,3 +20,6 @@ Install with bower `bower install versal-player-api` and include it on the page:
     // send this command to receive initial events
     player.startListening();
 
+## Rebuilding
+
+    npm run-script build
