@@ -69,5 +69,9 @@ module.exports = {
 			this._assetCallbacks[data.attribute] = callback;
 		}
 		this.sendMessage('requestAsset', data);
+	},
+
+	getAssetUrl: function(id){
+		return this.assetUrlTemplate.replace(/<%= id %>/, id);
 	}
 };
