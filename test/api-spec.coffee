@@ -92,9 +92,9 @@ describe 'supported commands', ->
     }
     assert postMessage.calledWith expectedMessage, '*'
 
-  it 'getAssetUrl', () ->
+  it 'assetUrl', () ->
     papi.handleMessage data: { event: 'environmentChanged', data: { assetUrlTemplate: 'http://asset.com/<%= id %>' } }
-    assetUrl = papi.getAssetUrl 1
+    assetUrl = papi.assetUrl 1
     assert.equal assetUrl, 'http://asset.com/1'
 
   describe 'compatibility', ->
