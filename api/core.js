@@ -71,7 +71,7 @@ module.exports = {
 		this.sendMessage('requestAsset', data);
 	},
 
-	getAssetUrl: function(id){
+	assetUrl: function(id){
 		return this.assetUrlTemplate.replace(/<%= id %>/, id);
 	}
 };

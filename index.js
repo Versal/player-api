@@ -66,10 +66,6 @@ PlayerAPI.prototype.handleMessage = function(evt) {
   }
 };
 
-PlayerAPI.prototype.assetUrl = function(id){
-  return this.assetUrlTemplate.replace('<%= id %>', id);
-};
-
 // TODO: move implementation to the player
 PlayerAPI.prototype._triggerAssetCallbacks = function(attrs){
   Object.keys(this._assetAttributes).forEach(function(name){
