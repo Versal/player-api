@@ -68,7 +68,7 @@ describe 'supported commands', ->
   it 'track', ->
     papi.track 'done', { foo: 'bar'}
 
-    expectedMessage = { event: 'track', data: { event: 'done', data: { foo: 'bar' } } }
+    expectedMessage = { event: 'track', data: { '@type': 'done', foo: 'bar' } }
     assert postMessage.calledWith expectedMessage, '*'
 
   it 'error', ->

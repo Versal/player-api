@@ -40,13 +40,13 @@ module.exports = {
 		this.sendMessage('setEmpty', { empty: empty });
 	},
 
-	track: function(name, data){
-		var message = {
-			event: name,
-			data: data
-		};
-		this.sendMessage('track', message);
-	},
+  track: function(name, _data){
+    var data = { '@type': name };
+    Object.keys(_data).forEach(function(key){
+      data[key] = _data[key];
+    });
+    this.sendMessage('track', data);
+  },
 
 	error: function(data){
 		this.sendMessage('error', data);
