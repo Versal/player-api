@@ -99,11 +99,11 @@ describe 'supported commands', ->
 
   describe 'compatibility', ->
 
-    it 'setEditable should trigger editableChanged', ->
+    it 'setEditable was deprecated, and it should NOT trigger anything', ->
       editableChanged = sinon.spy()
       papi.on('editableChanged', editableChanged)
       papi.handleMessage data: { event: 'setEditable', data: { editable: true } }
-      assert editableChanged.calledWith true
+      assert.equal editableChanged.called, false
 
   describe 'futures', ->
 

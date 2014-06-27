@@ -55,11 +55,6 @@ PlayerAPI.prototype.handleMessage = function(evt) {
 
     this.emit(message.event, message.data);
 
-    // Future-proofing editableChanged event
-    if(message.event == 'setEditable') {
-      this.emit('editableChanged', message.data.editable);
-    }
-
     if(message.event == 'environmentChanged') {
       this.assetUrlTemplate = message.data.assetUrlTemplate;
     }

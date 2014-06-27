@@ -147,11 +147,6 @@ PlayerAPI.prototype.handleMessage = function(evt) {
 
     this.emit(message.event, message.data);
 
-    // Future-proofing editableChanged event
-    if(message.event == 'setEditable') {
-      this.emit('editableChanged', message.data.editable);
-    }
-
     if(message.event == 'environmentChanged') {
       this.assetUrlTemplate = message.data.assetUrlTemplate;
     }
@@ -332,7 +327,10 @@ EventEmitter.prototype.addListener = function(type, listener) {
                     'leak detected. %d listeners added. ' +
                     'Use emitter.setMaxListeners() to increase limit.',
                     this._events[type].length);
-      console.trace();
+      if (typeof console.trace === 'function') {
+        // not supported in IE 10
+        console.trace();
+      }
     }
   }
 
