@@ -23,3 +23,6 @@ Install with bower `bower install versal-player-api` and include it on the page:
 ## Rebuilding
 
     npm run-script build
+
+## Change log
+- v0.2.4. Remove setEditable event completely in favor for editableChanged event
