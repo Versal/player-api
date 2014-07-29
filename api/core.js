@@ -9,16 +9,25 @@ module.exports = {
   },
 
   setAttribute: function(name, value){
+    if (name === 'vs-challenges') return;
+
     var attr = {};
     attr[name] = value;
     this.setAttributes(attr);
   },
 
   setAttributes: function(attrs) {
+    // Remove any interference between challenges-js-api
+    // and player-api
+    //  - Only allow challenges to set 'vs-challenges'
+    delete attrs['vs-challenges'];
+
     this.sendMessage('setAttributes', attrs);
   },
 
   setLearnerAttribute: function(name, value){
+    if (name === 'vs-challenges') return;
+
     var attr = {};
     attr[name] = value;
     this.setLearnerState(attr);
@@ -29,6 +38,11 @@ module.exports = {
   },
 
   setLearnerState: function(attrs) {
+    // Remove any interference between challenges-js-api
+    // and player-api
+    //  - Only allow challenges to set 'vs-scores'
+    delete attrs['vs-scores'];
+
     this.sendMessage('setLearnerState', attrs);
   },
 
