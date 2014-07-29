@@ -1,4 +1,4 @@
-var EventEmitter = require('events').EventEmitter;
+var EventEmitter = require('./bower_components/eventEmitter/EventEmitter');
 var coreApi = require('./api/core');
 var challenges = require('./api/challenges');
 

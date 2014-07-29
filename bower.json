@@ -19,5 +19,8 @@
     "test",
     "index.js",
     "api"
-  ]
+  ],
+  "dependencies": {
+    "eventEmitter": "~4.2.7"
+  }
 }
