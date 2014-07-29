@@ -1,95 +1,4 @@
 !function(e){if("object"==typeof exports)module.exports=e();else if("function"==typeof define&&define.amd)define(e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.VersalPlayerAPI=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
-module.exports = {
-  // challenges
-  setChallenges: function(challenges) {
-    this.sendMessage('setChallenges', challenges);
-  },
-
-  scoreChallenges: function(responses) {
-    this.sendMessage('scoreChallenges', responses);
-  }
-};
-
-},{}],2:[function(_dereq_,module,exports){
-module.exports = {
-
-  startListening: function(){
-    this.sendMessage('startListening');
-  },
-
-  setHeight: function(px){
-    this.sendMessage('setHeight', { pixels: px });
-  },
-
-  setAttribute: function(name, value){
-    var attr = {};
-    attr[name] = value;
-    this.setAttributes(attr);
-  },
-
-  setAttributes: function(attrs) {
-    this.sendMessage('setAttributes', attrs);
-  },
-
-  setLearnerAttribute: function(name, value){
-    var attr = {};
-    attr[name] = value;
-    this.setLearnerState(attr);
-  },
-
-  setLearnerAttributes: function(attrs) {
-    this.sendMessage('setLearnerState', attrs);
-  },
-
-  setLearnerState: function(attrs) {
-    this.sendMessage('setLearnerState', attrs);
-  },
-
-  setPropertySheetAttributes: function(attrs){
-    this.sendMessage('setPropertySheetAttributes', attrs);
-  },
-
-  setEmpty: function(empty){
-    this.sendMessage('setEmpty', { empty: empty });
-  },
-
-  track: function(name, _data){
-    var data = { '@type': name };
-    Object.keys(_data).forEach(function(key){
-      data[key] = _data[key];
-    });
-    this.sendMessage('track', data);
-  },
-
-  error: function(data){
-    this.sendMessage('error', data);
-  },
-
-  // controversial
-  changeBlocking: function(){
-    this.sendMessage('changeBlocking');
-  },
-
-  requestAsset: function(data, callback){
-    if(!data.attribute) {
-      data.attribute = '__asset__';
-    }
-    // TODO: remove this after assets are communicated from the player
-    // in a dedicated event
-    this._assetAttributes[data.attribute] = true;
-
-    if(callback) {
-      this._assetCallbacks[data.attribute] = callback;
-    }
-    this.sendMessage('requestAsset', data);
-  },
-
-  assetUrl: function(id){
-    return this.assetUrlTemplate.replace(/<%= id %>/, id);
-  }
-};
-
-},{}],3:[function(_dereq_,module,exports){
 /*!
  * EventEmitter v4.2.7 - git.io/ee
  * Oliver Caldwell
@@ -563,10 +472,8 @@ module.exports = {
 	}
 }.call(this));
 
-},{}],4:[function(_dereq_,module,exports){
+},{}],2:[function(_dereq_,module,exports){
 var EventEmitter = _dereq_('./bower_components/eventEmitter/EventEmitter');
-var coreApi = _dereq_('./api/core');
-var challenges = _dereq_('./api/challenges');
 
 //  This Player thing should be used inside gadget
 //  as a convenience API over postMessage.
@@ -642,17 +549,91 @@ PlayerAPI.prototype._triggerAssetCallbacks = function(attrs){
   }.bind(this));
 };
 
-PlayerAPI.use = function(dictionary){
-  Object.keys(dictionary).forEach(function(key){
-    PlayerAPI.prototype[key] = dictionary[key];
-  });
+PlayerAPI.prototype.startListening = function(){
+    this.sendMessage('startListening');
 };
 
-PlayerAPI.use(coreApi);
-PlayerAPI.use(challenges);
+PlayerAPI.prototype.setHeight = function(px){
+  this.sendMessage('setHeight', { pixels: px });
+};
+
+PlayerAPI.prototype.setAttribute = function(name, value){
+  var attr = {};
+  attr[name] = value;
+  this.setAttributes(attr);
+};
+
+PlayerAPI.prototype.setAttributes = function(attrs) {
+  this.sendMessage('setAttributes', attrs);
+};
+
+PlayerAPI.prototype.setLearnerAttribute = function(name, value){
+  var attr = {};
+  attr[name] = value;
+  this.setLearnerState(attr);
+};
+
+PlayerAPI.prototype.setLearnerAttributes = function(attrs) {
+  this.sendMessage('setLearnerState', attrs);
+};
+
+PlayerAPI.prototype.setLearnerState = function(attrs) {
+  this.sendMessage('setLearnerState', attrs);
+};
+
+PlayerAPI.prototype.setPropertySheetAttributes = function(attrs){
+  this.sendMessage('setPropertySheetAttributes', attrs);
+};
+
+PlayerAPI.prototype.setEmpty = function(empty){
+  this.sendMessage('setEmpty', { empty: empty });
+};
+
+PlayerAPI.prototype.track = function(name, _data){
+  var data = { '@type': name };
+  Object.keys(_data).forEach(function(key){
+    data[key] = _data[key];
+  });
+  this.sendMessage('track', data);
+};
+
+PlayerAPI.prototype.error = function(data){
+  this.sendMessage('error', data);
+};
+
+// controversial
+PlayerAPI.prototype.changeBlocking = function(){
+  this.sendMessage('changeBlocking');
+};
+
+PlayerAPI.prototype.requestAsset = function(data, callback){
+  if(!data.attribute) {
+    data.attribute = '__asset__';
+  }
+  // TODO: remove this after assets are communicated from the player
+  // in a dedicated event
+  this._assetAttributes[data.attribute] = true;
+
+  if(callback) {
+    this._assetCallbacks[data.attribute] = callback;
+  }
+  this.sendMessage('requestAsset', data);
+};
+
+PlayerAPI.prototype.assetUrl = function(id){
+  return this.assetUrlTemplate.replace(/<%= id %>/, id);
+};
+
+PlayerAPI.prototype.setChallenges = function(challenges) {
+  this.sendMessage('setChallenges', challenges);
+};
+
+PlayerAPI.prototype.scoreChallenges = function(responses) {
+  this.sendMessage('scoreChallenges', responses);
+};
 
 module.exports = PlayerAPI;
 
-},{"./api/challenges":1,"./api/core":2,"./bower_components/eventEmitter/EventEmitter":3}]},{},[4])
-(4)
+},{"./bower_components/eventEmitter/EventEmitter":1}]},{},[2])
+(2)
 });
