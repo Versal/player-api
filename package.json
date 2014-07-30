@@ -1,14 +1,12 @@
 {
   "name": "versal-player-api",
   "version": "0.2.4",
-  "main": "dist/api.js",
+  "main": "index.js",
   "repository": "https://github.com/versal/player-api",
   "scripts": {
-    "test": "karma start --browsers Firefox --single-run",
-    "build": "browserify -s VersalPlayerAPI index.js > dist/api.js"
+    "test": "karma start --browsers Firefox --single-run"
   },
   "devDependencies": {
-    "browserify": "^3.41.0",
     "karma": "^0.12.19",
     "karma-chai": "^0.1.0",
     "karma-cli": "0.0.4",

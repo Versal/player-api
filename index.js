@@ -1,5 +1,3 @@
-var EventEmitter = require('./bower_components/eventEmitter/EventEmitter');
-
 //  This Player thing should be used inside gadget
 //  as a convenience API over postMessage.
 //
@@ -157,4 +155,4 @@ PlayerAPI.prototype.scoreChallenges = function(responses) {
   this.sendMessage('scoreChallenges', responses);
 };
 
-module.exports = PlayerAPI;
+window.VersalPlayerAPI = PlayerAPI;

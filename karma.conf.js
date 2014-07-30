@@ -2,7 +2,8 @@ module.exports = function(config) {
   config.set({
     frameworks: ['mocha', 'chai', 'sinon'],
     files: [
-      'dist/api.js',
+      '../eventEmitter/EventEmitter.js',
+      'index.js',
       'test/*.coffee',
     ],
     reporters: ['progress'],
