@@ -1,4 +1,4 @@
-# Versal Player API [![Code Climate](https://codeclimate.com/github/Versal/player-api.png)](https://codeclimate.com/github/Versal/player-api)
+# Versal Player API [![Build Status](https://travis-ci.org/Versal/player-api.svg?branch=master)](https://travis-ci.org/Versal/player-api) [![Code Climate](https://codeclimate.com/github/Versal/player-api.png)](https://codeclimate.com/github/Versal/player-api)
 
 The Versal Player API provides a convenience layer and stability buffer on top
 of the [gadget api spec](https://github.com/Versal/gadget-api-spec). Please
