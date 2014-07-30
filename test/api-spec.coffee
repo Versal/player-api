@@ -1,6 +1,4 @@
-sinon = require 'sinon'
-assert = require 'assert'
-PlayerAPI = require('../index')
+assert = chai.assert
 
 describe 'supported commands', ->
   papi = null
@@ -8,7 +6,7 @@ describe 'supported commands', ->
 
   beforeEach ->
     postMessage = sinon.spy()
-    papi = new PlayerAPI(eventSource: { postMessage })
+    papi = new VersalPlayerAPI(eventSource: { postMessage })
 
   it 'startListening', ->
     papi.startListening()
