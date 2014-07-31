@@ -147,12 +147,4 @@ PlayerAPI.prototype.assetUrl = function(id){
   return this.assetUrlTemplate.replace(/<%= id %>/, id);
 };
 
-PlayerAPI.prototype.setChallenges = function(challenges) {
-  this.sendMessage('setChallenges', challenges);
-};
-
-PlayerAPI.prototype.scoreChallenges = function(responses) {
-  this.sendMessage('scoreChallenges', responses);
-};
-
 window.VersalPlayerAPI = PlayerAPI;
