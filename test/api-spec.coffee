@@ -1,6 +1,4 @@
-sinon = require 'sinon'
-assert = require 'assert'
-PlayerAPI = require('../index')
+assert = chai.assert
 
 describe 'supported commands', ->
   papi = null
@@ -8,7 +6,7 @@ describe 'supported commands', ->
 
   beforeEach ->
     postMessage = sinon.spy()
-    papi = new PlayerAPI(eventSource: { postMessage })
+    papi = new VersalPlayerAPI(eventSource: { postMessage })
 
   it 'startListening', ->
     papi.startListening()
@@ -119,3 +117,40 @@ describe 'supported commands', ->
       papi.requestAsset { type: 'image', attribute: 'foo' }, assetSelected
       papi.handleMessage data: { event: 'attributesChanged', data: { foo: { id: 1 } } }
       assert assetSelected.calledWith { id: 1 }
+
+  describe 'challenges', ->
+
+    it 'setChallenges', ->
+      papi.setChallenges [
+        {
+          prompt: 'Hello'
+          answer: 'Answer'
+          scoring: 'strict'
+        }
+      ]
+
+      expectedMessage =
+        event: 'setChallenges'
+        data: [{
+          prompt: 'Hello'
+          answer: 'Answer'
+          scoring: 'strict'
+        }]
+      assert postMessage.calledWith expectedMessage, '*'
+
+    it 'scoreChallenges', ->
+      papi.scoreChallenges [
+        'one'
+        'two'
+        'three'
+      ]
+
+      expectedMessage =
+        event: 'scoreChallenges'
+        data: [
+          'one'
+          'two'
+          'three'
+        ]
+      assert postMessage.calledWith
+

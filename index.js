@@ -1,7 +1,3 @@
-var EventEmitter = require('events').EventEmitter;
-var coreApi = require('./api/core');
-var challenges = require('./api/challenges');
-
 //  This Player thing should be used inside gadget
 //  as a convenience API over postMessage.
 //
@@ -76,13 +72,87 @@ PlayerAPI.prototype._triggerAssetCallbacks = function(attrs){
   }.bind(this));
 };
 
-PlayerAPI.use = function(dictionary){
-  Object.keys(dictionary).forEach(function(key){
-    PlayerAPI.prototype[key] = dictionary[key];
-  });
+PlayerAPI.prototype.startListening = function(){
+    this.sendMessage('startListening');
 };
 
-PlayerAPI.use(coreApi);
-PlayerAPI.use(challenges);
+PlayerAPI.prototype.setHeight = function(px){
+  this.sendMessage('setHeight', { pixels: px });
+};
 
-module.exports = PlayerAPI;
+PlayerAPI.prototype.setAttribute = function(name, value){
+  var attr = {};
+  attr[name] = value;
+  this.setAttributes(attr);
+};
+
+PlayerAPI.prototype.setAttributes = function(attrs) {
+  this.sendMessage('setAttributes', attrs);
+};
+
+PlayerAPI.prototype.setLearnerAttribute = function(name, value){
+  var attr = {};
+  attr[name] = value;
+  this.setLearnerState(attr);
+};
+
+PlayerAPI.prototype.setLearnerAttributes = function(attrs) {
+  this.sendMessage('setLearnerState', attrs);
+};
+
+PlayerAPI.prototype.setLearnerState = function(attrs) {
+  this.sendMessage('setLearnerState', attrs);
+};
+
+PlayerAPI.prototype.setPropertySheetAttributes = function(attrs){
+  this.sendMessage('setPropertySheetAttributes', attrs);
+};
+
+PlayerAPI.prototype.setEmpty = function(empty){
+  this.sendMessage('setEmpty', { empty: empty });
+};
+
+PlayerAPI.prototype.track = function(name, _data){
+  var data = { '@type': name };
+  Object.keys(_data).forEach(function(key){
+    data[key] = _data[key];
+  });
+  this.sendMessage('track', data);
+};
+
+PlayerAPI.prototype.error = function(data){
+  this.sendMessage('error', data);
+};
+
+// controversial
+PlayerAPI.prototype.changeBlocking = function(){
+  this.sendMessage('changeBlocking');
+};
+
+PlayerAPI.prototype.requestAsset = function(data, callback){
+  if(!data.attribute) {
+    data.attribute = '__asset__';
+  }
+  // TODO: remove this after assets are communicated from the player
+  // in a dedicated event
+  this._assetAttributes[data.attribute] = true;
+
+  if(callback) {
+    this._assetCallbacks[data.attribute] = callback;
+  }
+  this.sendMessage('requestAsset', data);
+};
+
+PlayerAPI.prototype.assetUrl = function(id){
+  return this.assetUrlTemplate.replace(/<%= id %>/, id);
+};
+
+PlayerAPI.prototype.setChallenges = function(challenges) {
+  this.sendMessage('setChallenges', challenges);
+};
+
+PlayerAPI.prototype.scoreChallenges = function(responses) {
+  this.sendMessage('scoreChallenges', responses);
+};
+
+window.VersalPlayerAPI = PlayerAPI;
