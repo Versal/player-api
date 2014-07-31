@@ -17,7 +17,7 @@ With web components:
 With vanilla HTML:
 
     <script src="bower_components/eventEmitter/EventEmitter.js"></script>
-    <script src="bower_components/player-api/index.js"></script>
+    <script src="bower_components/versal-player-api/index.js"></script>
 
 ## Usage
 
@@ -29,9 +29,7 @@ With vanilla HTML:
     // send this command to receive initial events
     player.startListening();
 
-## Rebuilding
-
-    npm run-script build
-
 ## Change log
-- v0.2.4. Remove setEditable event completely in favor for editableChanged event
+- **0.3.1** Minor fixes
+- **0.3.0** Remove compilation
+- **0.2.4** Remove setEditable event completely in favor for editableChanged event
