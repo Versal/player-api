@@ -30,6 +30,7 @@ With vanilla HTML:
     player.startListening();
 
 ## Change log
+- **0.3.2** Removed old "challenges" methods
 - **0.3.1** Minor fixes
 - **0.3.0** Remove compilation
 - **0.2.4** Remove setEditable event completely in favor for editableChanged event
