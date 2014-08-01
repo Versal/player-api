@@ -36,6 +36,7 @@ With vanilla HTML:
     player.watchBodyHeight();
 
 ## Change log
+- **0.3.3** Adds `setHeightToBodyHeight` and `watchBodyHeight` methods
 - **0.3.2** Removed old "challenges" methods
 - **0.3.1** Minor fixes
 - **0.3.0** Remove compilation
