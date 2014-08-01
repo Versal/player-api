@@ -118,8 +118,11 @@ describe 'supported commands', ->
       papi.handleMessage data: { event: 'attributesChanged', data: { foo: { id: 1 } } }
       assert assetSelected.calledWith { id: 1 }
 
-  describe 'setHeightToBodyHeight', ->
+  describe 'automatically setting height', ->
     iframe = null
+    setHeightWithCSS = (iframe) ->
+      iframe.contentWindow.document.body.style = 'height: 300px; padding-top: 10px; border-top: 10px solid black; margin-top: 10px'
+    expectedHeight = 300+10+10 # height+padding+border
 
     beforeEach (done) ->
       startListeningHandler = (event) ->
@@ -136,15 +139,50 @@ describe 'supported commands', ->
     afterEach ->
       document.body.removeChild(iframe)
 
-    it 'sends a setHeight event with the body height', (done) ->
+    it 'setHeightToBodyHeight sends a setHeight event with the body height', (done) ->
       iframe.style = 'height: 100px'
-      iframe.contentWindow.document.body.style = 'height: 300px; padding-top: 10px; border-top: 10px solid black; margin-top: 10px'
+      setHeightWithCSS(iframe)
       setTimeout (-> iframe.contentWindow.papi.setHeightToBodyHeight()), 0 # defer
 
       setHeightHandler = (event) ->
         return unless event.source == iframe.contentWindow
         assert.equal event.data.event, 'setHeight'
-        assert.equal event.data.data.pixels, 300+10+10 # height+padding+border
+        assert.equal event.data.data.pixels, expectedHeight
         window.removeEventListener 'message', setHeightHandler
         done()
       window.addEventListener 'message', setHeightHandler
+
+    it 'watchBodyHeight watches height changes', (done) ->
+      iframe.style = 'height: 100px'
+      interval = iframe.contentWindow.papi.watchBodyHeight()
+
+      setTimeout (-> setHeightWithCSS(iframe)), 50
+
+      setHeightHandler = (event) ->
+        return unless event.source == iframe.contentWindow
+        assert.equal event.data.event, 'setHeight'
+        if event.data.data.pixels == expectedHeight # there are other events before getting the expectedHeight
+          iframe.contentWindow.papi.unwatchBodyHeight()
+          window.removeEventListener 'message', setHeightHandler
+          done()
+      window.addEventListener 'message', setHeightHandler
+
+
+    it 'unwatchBodyHeight stops watching for height changes', (done) ->
+      iframe.style = 'height: 100px'
+      interval = iframe.contentWindow.papi.watchBodyHeight()
+      interval = iframe.contentWindow.papi.unwatchBodyHeight()
+
+      setHeightWithCSS(iframe)
+
+      setHeightHandler = (event) ->
+        return unless event.source == iframe.contentWindow
+        if event.data.event == 'setHeight' && event.data.data.pixels != 0
+          assert false, 'Got an automatic setHeight event while called unwatchBodyHeight'
+          done()
+      window.addEventListener 'message', setHeightHandler
+
+      finish = ->
+        window.removeEventListener 'message', setHeightHandler
+        done()
+      setTimeout finish, 100

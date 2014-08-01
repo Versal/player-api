@@ -76,12 +76,30 @@ PlayerAPI.prototype.startListening = function(){
   this.sendMessage('startListening');
 };
 
-PlayerAPI.prototype.setHeight = function(px){
+PlayerAPI.prototype.setHeight = function(px) {
+  if (px === this._lastSetHeight) return;
+  this._lastSetHeight = px;
   this.sendMessage('setHeight', { pixels: px });
 };
 
 PlayerAPI.prototype.setHeightToBodyHeight = function() {
   this.setHeight(document.body.offsetHeight);
+};
+
+PlayerAPI.prototype.watchBodyHeight = function(options) {
+  this.unwatchBodyHeight();
+  this.setHeightToBodyHeight();
+
+  options = options || {};
+  options.interval = options.interval || 32; // 2 frame refreshes at 60Hz, see https://github.com/davidjbradshaw/iframe-resizer/blob/v2.5.2/README.md#interval
+
+  this._bodyHeightInterval = setInterval(this.setHeightToBodyHeight.bind(this), options.interval);
+};
+
+PlayerAPI.prototype.unwatchBodyHeight = function() {
+  if (this._bodyHeightInterval === undefined) return;
+  clearInterval(this._bodyHeightInterval);
+  delete this._bodyHeightInterval;
 };
 
 PlayerAPI.prototype.setAttribute = function(name, value){

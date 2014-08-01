@@ -29,6 +29,12 @@ With vanilla HTML:
     // send this command to receive initial events
     player.startListening();
 
+    // update the iframe height
+    player.setHeightToBodyHeight();
+
+    // continuously watch for changes in height (e.g. because of window resizes)
+    player.watchBodyHeight();
+
 ## Change log
 - **0.3.2** Removed old "challenges" methods
 - **0.3.1** Minor fixes
