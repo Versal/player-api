@@ -166,3 +166,23 @@ describe 'supported commands', ->
           window.removeEventListener 'message', setHeightHandler
           done()
       window.addEventListener 'message', setHeightHandler
+
+
+    it 'unwatchBodyHeight stops watching for height changes', (done) ->
+      iframe.style = 'height: 100px'
+      interval = iframe.contentWindow.papi.watchBodyHeight()
+      interval = iframe.contentWindow.papi.unwatchBodyHeight()
+
+      setHeightWithCSS(iframe)
+
+      setHeightHandler = (event) ->
+        return unless event.source == iframe.contentWindow
+        if event.data.event == 'setHeight' && event.data.data.pixels != 0
+          assert false, 'Got an automatic setHeight event while called unwatchBodyHeight'
+          done()
+      window.addEventListener 'message', setHeightHandler
+
+      finish = ->
+        window.removeEventListener 'message', setHeightHandler
+        done()
+      setTimeout finish, 100
