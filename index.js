@@ -73,11 +73,15 @@ PlayerAPI.prototype._triggerAssetCallbacks = function(attrs){
 };
 
 PlayerAPI.prototype.startListening = function(){
-    this.sendMessage('startListening');
+  this.sendMessage('startListening');
 };
 
 PlayerAPI.prototype.setHeight = function(px){
   this.sendMessage('setHeight', { pixels: px });
+};
+
+PlayerAPI.prototype.setHeightToBodyHeight = function() {
+  this.setHeight(document.body.offsetHeight);
 };
 
 PlayerAPI.prototype.setAttribute = function(name, value){

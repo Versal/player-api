@@ -1,10 +1,12 @@
 module.exports = function(config) {
   config.set({
     frameworks: ['mocha', 'chai', 'sinon'],
+    basePath: '..',
     files: [
-      '../eventEmitter/EventEmitter.js',
-      'index.js',
-      'test/*.coffee',
+      'eventEmitter/EventEmitter.js',
+      'player-api/index.js',
+      'player-api/test/*.coffee',
+      {pattern: 'player-api/test/test_gadget.html', included: false}
     ],
     reporters: ['progress'],
     port: 9876,
