@@ -80,6 +80,10 @@ PlayerAPI.prototype.setHeight = function(px){
   this.sendMessage('setHeight', { pixels: px });
 };
 
+PlayerAPI.prototype.setHeightToBodyHeight = function() {
+  this.setHeight(document.body.offsetHeight);
+};
+
 PlayerAPI.prototype.setAttribute = function(name, value){
   var attr = {};
   attr[name] = value;

@@ -117,3 +117,34 @@ describe 'supported commands', ->
       papi.requestAsset { type: 'image', attribute: 'foo' }, assetSelected
       papi.handleMessage data: { event: 'attributesChanged', data: { foo: { id: 1 } } }
       assert assetSelected.calledWith { id: 1 }
+
+  describe 'setHeightToBodyHeight', ->
+    iframe = null
+
+    beforeEach (done) ->
+      startListeningHandler = (event) ->
+        return unless event.source == iframe.contentWindow
+        if event.data.event == 'startListening'
+          window.removeEventListener 'message', startListeningHandler
+          done()
+      window.addEventListener 'message', startListeningHandler
+
+      iframe = document.createElement 'iframe'
+      iframe.setAttribute 'src', '/base/player-api/test/test_gadget.html'
+      document.body.appendChild(iframe)
+
+    afterEach ->
+      document.body.removeChild(iframe)
+
+    it 'sends a setHeight event with the body height', (done) ->
+      iframe.style = 'height: 100px'
+      iframe.contentWindow.document.body.style = 'height: 300px; padding-top: 10px; border-top: 10px solid black; margin-top: 10px'
+      setTimeout (-> iframe.contentWindow.papi.setHeightToBodyHeight()), 0 # defer
+
+      setHeightHandler = (event) ->
+        return unless event.source == iframe.contentWindow
+        assert.equal event.data.event, 'setHeight'
+        assert.equal event.data.data.pixels, 300+10+10 # height+padding+border
+        window.removeEventListener 'message', setHeightHandler
+        done()
+      window.addEventListener 'message', setHeightHandler
