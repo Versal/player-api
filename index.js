@@ -83,7 +83,8 @@ PlayerAPI.prototype.setHeight = function(px) {
 };
 
 PlayerAPI.prototype.setHeightToBodyHeight = function() {
-  this.setHeight(document.body.scrollHeight);
+  this.setHeight(100);
+  this.setHeight(document.body.offsetHeight);
 };
 
 PlayerAPI.prototype.watchBodyHeight = function(options) {
