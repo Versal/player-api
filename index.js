@@ -1,3 +1,5 @@
+(function(){
+
 //  This Player thing should be used inside gadget
 //  as a convenience API over postMessage.
 //
@@ -170,3 +172,5 @@ PlayerAPI.prototype.assetUrl = function(id){
 };
 
 window.VersalPlayerAPI = PlayerAPI;
+
+})();
