@@ -22,15 +22,15 @@ Supported message names:
 
 * `playerApi.on('attributesChanged', function(attrs){...})`
 
-The callback receives the new dictionary of attributes for the gadget. The gadget should update the configuration visually.
+The callback receives an object containing the new attributes for the gadget. The gadget should update the configuration visually.
 
 * `playerApi.on('learnerStateChanged', function(learnerState){...})`
 
-The callback receives the new dictionary of learner state for the gadget. The gadget should update the learner state visually.
+The callback receives an object containing the new learner state for the gadget. The gadget should update the learner state visually.
 
 * `playerApi.on('editableChanged', function(attrs){...})`
 
-The callback receives a dictionary of the form `{editable: true/false}`. This value describes the new editable state for the gadget. Accordingly, the gadget should switch to editing or back to learner's view.
+The callback receives an object of the form `{editable: true/false}`. The value of `editable` describes the new editable state for the gadget. Accordingly, the gadget should switch to editing or back to learner's view.
 
 ## Messages from gadget to player
 
@@ -62,7 +62,7 @@ Persist a single attribute in the gadget configuration.
 
 * `playerApi.setAttributes(attrs)`
 
-Persist a dictionary of attributes in the gadget configuration.
+Persist a object containing the current attributes in the gadget configuration.
 
 * `playerApi.setLearnerAttribute(name, value)`
 
@@ -70,11 +70,11 @@ Persist a single attribute in the gadget's learner state.
 
 * `playerApi.setLearnerAttributes(attrs)` or also `playerApi.setLearnerState(attrs)`
 
-Persist a dictionary of attributes in the gadget's learner state.
+Persist an object containing the gadget's current learner state.
 
 * `playerApi.setPropertySheetAttributes(propertySheetDict)`
 
-Define the gadget's property sheet. The argument is a dictionary describing the attributes appearing in the property sheet.
+Define the gadget's property sheet. The argument is a object containing the attributes appearing in the property sheet.
 
 Presently the player supports the following data types in property sheets:
 
@@ -133,9 +133,9 @@ Tell the player to show an "empty gadget" placeholder.
 
 Tell the player to show an "error in gadget" placeholder.
 
-* `playerApi.track(name, dataDictionary)`
+* `playerApi.track(name, data)`
 
-Track learner's progress. The `name` specifies the kind of progress event. The `dataDictionary` is a dictionary corresponding to that progress event.
+Track learner's progress. The `name` specifies the kind of progress event. The `data` is an object describing that progress event.
 
 * `playerApi.changeBlocking()`
 
