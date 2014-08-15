@@ -57,12 +57,6 @@ describe 'supported commands', ->
       data: { foo: 'bar' }
     assert postMessage.calledWith expectedMessage, '*'
 
-  it 'setEmpty', ->
-    papi.setEmpty true
-
-    expectedMessage = { event: 'setEmpty', data: { empty: true } }
-    assert postMessage.calledWith expectedMessage, '*'
-
   it 'track', ->
     papi.track 'done', { foo: 'bar'}
 
@@ -73,12 +67,6 @@ describe 'supported commands', ->
     papi.error { foo: 'bar'}
 
     expectedMessage = { event: 'error', data: { foo: 'bar'} }
-    assert postMessage.calledWith expectedMessage, '*'
-
-  it 'changeBlocking', ->
-    papi.changeBlocking()
-
-    expectedMessage = { event: 'changeBlocking' }
     assert postMessage.calledWith expectedMessage, '*'
 
   it 'requestAsset', ->

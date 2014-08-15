@@ -132,10 +132,6 @@ PlayerAPI.prototype.setPropertySheetAttributes = function(attrs){
   this.sendMessage('setPropertySheetAttributes', attrs);
 };
 
-PlayerAPI.prototype.setEmpty = function(empty){
-  this.sendMessage('setEmpty', { empty: empty });
-};
-
 PlayerAPI.prototype.track = function(name, _data){
   var data = { '@type': name };
   Object.keys(_data).forEach(function(key){
@@ -146,11 +142,6 @@ PlayerAPI.prototype.track = function(name, _data){
 
 PlayerAPI.prototype.error = function(data){
   this.sendMessage('error', data);
-};
-
-// controversial
-PlayerAPI.prototype.changeBlocking = function(){
-  this.sendMessage('changeBlocking');
 };
 
 PlayerAPI.prototype.requestAsset = function(data, callback){
