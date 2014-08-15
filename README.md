@@ -19,9 +19,7 @@ With vanilla HTML:
     <script src="bower_components/eventEmitter/EventEmitter.js"></script>
     <script src="bower_components/versal-player-api/index.js"></script>
 
-## Usage
-
-The player API object is created by
+Then instantiate the player API object:
 
      var playerApi = new VersalPlayerAPI()
 
