@@ -1,80 +1,103 @@
 # API reference
 
+## Installation
+
+Include as a Bower dependency:
+
+    bower install --save Versal/player-api
+
+With web components:
+
+    <link rel="import" href="bower_components/player-api/index.html">
+
+With vanilla HTML:
+
+    <script src="bower_components/eventEmitter/EventEmitter.js"></script>
+    <script src="bower_components/versal-player-api/index.js"></script>
+
 ## Creating the player API object
 
 The player API object is created by
 
-     var playerApi = new VersalPlayerAPI();
-
-## Messages from player to gadget
-
-Subscribe to messages by using the `on` and `off` methods:
-
-* `playerApi.on('message name', callback)`
-
-* `playerApi.off('message name', callback)`
-
-Supported message names:
-
-      attributesChanged
-      learnerStateChanged
-      editableChanged
-
-* `playerApi.on('attributesChanged', function(attrs){...})`
-
-The callback receives an object containing the new attributes for the gadget. The gadget should update the configuration visually.
-
-* `playerApi.on('learnerStateChanged', function(learnerState){...})`
-
-The callback receives an object containing the new learner state for the gadget. The gadget should update the learner state visually.
-
-* `playerApi.on('editableChanged', function(attrs){...})`
-
-The callback receives an object of the form `{editable: true/false}`. The value of `editable` describes the new editable state for the gadget. Accordingly, the gadget should switch to editing or back to learner's view.
+     var playerApi = new VersalPlayerAPI()
 
 ## Messages from gadget to player
 
 All supported messages from gadget to player are exposed as methods on the player API object.
 
-* `playerApi.startListening()`
+### `startListening`
 
 Indicates that the gadget has subscribed to the necessary messages and is ready to start receiving them. This would be typically the first message sent by the gadget to the player.
 
-* `playerApi.setHeight(heightPx)`
+Example: `playerApi.startListening()`
+
+### `setHeight`
 
 Assign height (in pixels) to the gadget's container.
 
-* `playerApi.setHeightToBodyHeight()`
+Example: `playerApi.setHeight(420)`
 
-Automatically assign height to the gadget's container according to the current height of the gadget's `body` element.
+### `setHeightToBodyHeight`
 
-* `playerApi.watchBodyHeight({interval: NNN})`
+Assign height to the gadget's container according to the current height of the gadget's `body` element.
 
-Create a watching timer that will refresh the gadget container's height according to the current height of the gadget's `body` element. The value of the interval (default is 32) is given in ms.
+Example: `playerApi.setHeightToBodyHeight()`
 
-* `playerApi.unwatchBodyHeight()`
+### `watchBodyHeight`
+
+Create a watching timer that will refresh the gadget container's height according to the current height of the gadget's `body` element. The value of the timer interval is given in milliseconds; the default value is 32.
+
+Example: `playerApi.watchBodyHeight({interval: 200})`
+
+### `unwatchBodyHeight`
 
 Stop dynamically adjusting the gadget container's height.
 
-* `playerApi.setAttribute(name, value)`
+Example: `playerApi.unwatchBodyHeight()`
+
+### `setAttribute`
 
 Persist a single attribute in the gadget configuration.
 
-* `playerApi.setAttributes(attrs)`
+Example: `playerApi.setAttribute('myColor', '#202020')`
 
-Persist a object containing the current attributes in the gadget configuration.
+### `setAttributes`
 
-* `playerApi.setLearnerAttribute(name, value)`
+Persist a object containing the changed attributes in the gadget configuration. Only the changed attributes need to be specified (not the entire gadget configuration).
+
+Example: `playerApi.setAttributes({ myColor: '#202020', myFont: 'Courier' })`
+
+### `setLearnerAttribute`
 
 Persist a single attribute in the gadget's learner state.
 
-* `playerApi.setLearnerAttributes(attrs)` or also `playerApi.setLearnerState(attrs)`
+Example: `playerApi.setLearnerAttribute('openedGadget', true)`
 
-Persist an object containing the gadget's current learner state.
+### `setLearnerAttributes`
 
-* `playerApi.setPropertySheetAttributes(propertySheetDict)`
+Persist an object containing the gadget's current learner state. Only the changed attributes need to be specified (not the entire learner state).
 
-Define the gadget's property sheet. The argument is a object containing the attributes appearing in the property sheet.
+Example: `playerApi.setLearnerAttributes({ lastOpened: 12, lastSelected: true })`
+
+### `setPropertySheetAttributes`
+
+Define the gadget's property sheet. 
+
+Usage: `playerApi.setPropertySheetAttributes(descriptionObject)`
+
+The argument is a object describing the attributes appearing in the property sheet.
+
+For each attribute, we describe the attribute's name, the attribute's data type, and options specific to that data type.
+Example:
+
+```
+playerApi.setPropertySheetAttributes({
+     numberOfWords:  { type: 'Range', min: 100, max: 500, step: 20 },
+     chosenAuthor: { type: 'Select',
+                      options: ['Shakespeare', 'Hegel', 'Dickens', 'Lao Tzu']
+                   }
+})
+```
 
 Presently the player supports the following data types in property sheets:
 
@@ -100,7 +123,7 @@ Example: `{ type: 'Range', min: 100, max: 200, step: 10 }`
 
 *      `Tags`, a selection of user-supplied tags
 
-Example:
+Example of using `Tags`:
 
 ```
 { type : 'Tags',
@@ -113,47 +136,54 @@ Example:
 }
 ```
 
-Here is a small example of defining a property sheet:
 
-```
-playerApi.setPropertySheetAttributes({
-     numberOfWords:  { type: 'Range', min: 100, max: 500, step: 20 },
-     chosenAuthor: { type: 'Select',
-                      options: ['Shakespeare', 'Hegel', 'Dickens', 'Lao Tzu']
-                   }
-})
-```
+### `setEmpty`
 
+Tell the player to show an "empty gadget" placeholder instead of the gadget.
 
-* `playerApi.setEmpty()`
+Example: `playerApi.setEmpty()`
 
-Tell the player to show an "empty gadget" placeholder.
+### `error`
 
-* `playerApi.error()`
+Tell the player to show a placeholder that indicates an error.
 
-Tell the player to show an "error in gadget" placeholder.
+Example: `playerApi.error()`
 
-* `playerApi.track(name, data)`
+### `track`
 
-Track learner's progress. The `name` specifies the kind of progress event. The `data` is an object describing that progress event.
+Track events generated by the gadget. These events can be, for example, learner's progress, or statistical information about the gadget's performance.
 
-* `playerApi.changeBlocking()`
+Example: `playerApi.track(name, data)`
 
-Tell the player that the gadget no longer blocks the next lesson from being shown. (Useful for quiz-like gadgets at the end of a lesson.)
+The `name` specifies the kind of progress event. The `data` is an object describing that progress event.
 
-* `playerApi.assetUrl(assetId)`
+### `changeBlocking`
 
-Obtain the URL for an asset held by the Versal platform. The argument is the asset's data structure.
+Tell the player that the gadget no longer blocks the next lesson from being shown. (Useful for quiz-like gadgets that block the next lesson until the learner passes the quiz.)
 
-* `playerApi.requestAsset({attribute: attrName, type: assetType}, function(assetData){...})`
+Example: `playerApi.changeBlocking()`
 
-Tell the player to show the dialog for uploading an asset. 
+### `assetUrl`
 
-The first parameter describes the desired type of the asset and the name of the gadget attribute in which the new asset metadata will be stored after a successful upload. Possible asset types are `image` and `video`.
+Obtain the URL for an asset held by the Versal platform.
 
-The second parameter (the callback) is optional. 
+Example: `playerApi.assetUrl(assetId)`
 
-If the user successfully uploads an asset, a new asset is created and stored on the Versal platform. The asset is described by the data structure of the form
+The argument is the asset's ID string.
+
+### `requestAsset`
+
+Ask the player to show a standard dialog for uploading an asset.
+
+Usage: `playerApi.requestAsset({attribute: attrName, type: assetType}, function(assetData){...})`
+
+The first parameter describes the desired type of the asset and the name of the gadget attribute in which the new asset's metadata will be stored after a successful upload.
+
+Possible asset types are `image` and `video`.
+
+The second parameter (the callback) is optional. The callback will be invoked after a successful upload.
+
+Each newly uploaded asset is processed and stored on the Versal platform. The asset is described by the data structure of the form
 
 ```
 { id: 'xxxx',
@@ -165,7 +195,7 @@ If the user successfully uploads an asset, a new asset is created and stored on 
       scale: '800x600'
       },
       {
-      id: 'zzz',
+      id: 'zzzz',
       original: true,
       contentType: 'image/png',
       scale: '1024x768'
@@ -175,6 +205,40 @@ If the user successfully uploads an asset, a new asset is created and stored on 
 }
 ```
 
-This data structure is set as the value of the gadget's configuration attribute named `attrName`. The gadget code can use any of the asset IDs in the `playerApi.assetUrl()` method in order to obtain the corresponding URLs.
+This data structure will be set as the value of the gadget's configuration attribute named `attrName` (which is given as a parameter in the `requestAsset` call). The gadget code should select a desired representation and use its ID in the `playerApi.assetUrl()` method in order to obtain the corresponding URL of the asset.
 
-Since a successful upload initiates a new value for an attribute, the `attributesChanged` message will be sent to the gadget. If the callback argument was given in the `requestAsset` call, the callback function will be also invoked with the new asset data structure as its argument.
+Since a successful upload will assign a new value for a gadget attribute, the gadget should expect an `attributesChanged` message after the user completes the upload. If the callback argument was given in the `requestAsset` call, the callback function will be also invoked with the new asset data structure as its argument.
+
+## Messages from player to gadget
+
+Subscribe to messages by using the `on` and `off` methods, for example:
+
+`playerApi.on('message name', callback)`
+
+`playerApi.off('message name', callback)`
+
+Supported message names are `attributesChanged`, `learnerStateChanged`, and `editableChanged`.
+
+### `attributesChanged`
+
+This message indicates to the gadget that some attributes have changed their values. This message is also sent to the gadget at initialization time, that is, shortly after the gadget sends `startListening` to the player. 
+
+Example: `playerApi.on('attributesChanged', function(attrs){...})`
+
+The callback receives an object containing the new attributes for the gadget. The gadget should update its visual state accordingly.
+
+### `learnerStateChanged`
+
+This message indicates to the gadget that some learner's state has changed. This message is also sent to the gadget at initialization time, that is, shortly after the gadget sends `startListening` to the player. 
+
+Example: `playerApi.on('learnerStateChanged', function(learnerState){...})`
+
+The callback receives an object containing the new learner state for the gadget. The gadget should update its visual state accordingly.
+
+### `editableChanged`
+
+This message indicates to the gadget whether its configuration is currently being edited.
+
+Example: `playerApi.on('editableChanged', function(attrs){...})`
+
+The callback receives an object of the form `{editable: true/false}`. The value of `editable` describes the new editable state for the gadget. Accordingly, the gadget should switch its visual state to editing (the author's view) or to the learner's view.
