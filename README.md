@@ -1,8 +1,7 @@
 # Versal Player API [![Build Status](https://travis-ci.org/Versal/player-api.svg?branch=master)](https://travis-ci.org/Versal/player-api) [![Code Climate](https://codeclimate.com/github/Versal/player-api.png)](https://codeclimate.com/github/Versal/player-api)
 
 The Versal Player API provides a convenience layer and stability buffer on top
-of the [iframe launcher spec](https://github.com/Versal/versal-gadget-launchers/iframe-launcher/README.md). Please
-refer to the [api doc](./api.md) for the full list of supported events and commands.
+of the [iframe launcher spec](https://github.com/Versal/versal-gadget-launchers/iframe-launcher/README.md).
 
 ## Installation
 
