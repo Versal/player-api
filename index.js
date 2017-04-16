@@ -85,6 +85,7 @@ PlayerAPI.prototype.setHeight = function(px) {
 };
 
 PlayerAPI.prototype.setHeightToBodyHeight = function() {
+  this.setHeight(100);
   this.setHeight(document.body.offsetHeight);
 };
 
